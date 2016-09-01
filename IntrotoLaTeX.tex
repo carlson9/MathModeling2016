@@ -1,0 +1,289 @@
+%The next three lines are called the preamble. You include the preamble to tell \LaTeX~what kind of document you will be creating (e.g. a book, journal article, etc.). For most of your assignments it's easiest to just stick with \documentclass{article}. The lines following the \documentclass{} are the various packages you will use. \LaTeX~has numerous packages that come preloaded with it; to use them, however, you have to explicitly ''call'' them every time you make a new file. Two of the packages we have here are the geometry package, which allows us to do things like set the margins of our document to whatever length we like. The other package is the amsmath package; this has many useful math mode things. The package hyperref allows clickable urls inside the command \url{}
+%%You can, of course, use more packages in your documents. There are many out there, and each can do different things. Which package you use depends on what you need to do in that document. The two I've included here are usually good ones to include in most of your problem sets, although even they aren't absolutely necesary if all you want to do is make a basic paper. For example if you don't include the geometry package, \LaTeX~will simply set the margins to their default value.  
+\documentclass{article}
+\usepackage{amsmath}%%contains the align environment and some other useful stuff
+\usepackage{graphicx}%% Importing Graphics (PDF files)
+\usepackage[top=1in, bottom=1in, right=1in, left=1in]{geometry}%% Margins
+\usepackage{hyperref}
+
+%After placing your preamble, you can start creating the main part of your document. To start the actual document, simply write \begin{document}. This tells \LaTeX~you are about to start writing the main part of the document; lines written after this will actually appear in the final document itself (except for some lines, such as those that create a table; I'll explain this more later). 
+%NOTE: If you begin anythign in \LaTeX, including the document itself, you must also end it! For example, the last line in this .tex file (scroll all the way to the bottom) is \end{document}. If that line were not there, we would not be able to make a pdf when we tried to build out document, because \LaTeX~would keep looking for that \end command. This is the same when you use other \begin commands, such as \begin{align} or \begin{table}; if you don't follow them up with \end{align} or \end{table}, \LaTeX~will get confused and either you won't get a pdf output, or the pdf will have a strange format.    
+\begin{document}
+\section*{Some Notes on Formatting}
+A few quick notes on formatting: for those of you using a GUI, it is fairly easy to change your font to either bold, italic, underlined, etc. You simply highlight the text you want \textbf{bolded} or \textit{italicized} and click the appropriate button near the top of your screen. This will automatically put in the code that is used to bold/italicize/etc. around the word(s) you want to make bold/italic/etc. 
+
+For those of you who do not have an interface that has these buttons, however, the commands are very simple. Say you want to bold the words ``political economy'' in your document. You simply type \begin{verbatim} \textbf{political economy} \end{verbatim} Notice whatever words you want bold go in the curly brackets at the end of the command. You can also use the following codes to italicize or underline: \begin{verbatim} \textit{} \end{verbatim} \begin{verbatim} \underline{} \end{verbatim} Again, whatever words you want italicized or underlined simply go in the curly brackets. There's code for other formats too, but there's not enough room to list them all; feel free to google them. The quotation marks around ``political economy'' are done in the following way: \`{}\`{}political economy\'{}\'{}. If instead you used \begin{verbatim}"political economy"\end{verbatim} the result would be "political economy."
+
+Moving on: say you want to left-align, right-align, or center some text. Again the commands are very simple: \begin{verbatim} \begin{flushleft} \end{flushleft} \end{verbatim} \begin{verbatim} \begin{flushright} \end{flushright} \end{verbatim} \begin{verbatim} \begin{center} \end{center}\end{verbatim} Simply put the text that you want left/right-aligned or centered in between the begin and end commands. Examples:
+\begin{center} This line is centered. \end{center} 
+\begin{flushright} This line is right-aligned. \end{flushright}
+
+There are other things you can do, like adding headers/footers\footnote{I'm a footnote. You can click on me because of the hyperref package. Otherwise it would just be a standard footnote. When writing articles, do not use the hyperref package.} to your papers. I won't go over them all here, but rest-assured: if it can be done with Microsoft Word, it can be done with \LaTeX, but better. It just takes a while sometimes to find the right code. 
+
+\section*{Sections, Subsections, and the Like...}
+\LaTeX~has a very easy way of creating subheadings in the middle of your paper to demarkate different sections of a paper (e.g. the introduction, theory, methods, data, and conclusion of a journal article). In fact, I've already been doing it in this example document: ``Some Notes on Formatting'' and ``Sections, Subsections, and the Like'' were all generated using the following command: \begin{verbatim} \section{} \end{verbatim} This command is very similar to the other commands: you simply write what you want the new section to be called in the curly brackets, and \LaTeX~will automatically create a new section in your document. The same thing can be done to create subsections; the only different is the command is: \begin{verbatim} \subsection{} \end{verbatim} If you want to create  a subsection to \textit{another} subsection, the command is (you guessed it): \begin{verbatim} \subsubsection{} \end{verbatim} Here's an example: we want to make a section called ``History of Western Civilization'', and then a subsection called ``Ancient Greece and Rome'', which contains two more subsections called ``Greece'' and ``Rome''. Then we want to make another section on the same level as our first subsection called ``The Middle Ages''. So we write the code:
+\begin{verbatim}
+\section{History of Western Civilization}
+\subsection{Ancient Greece and Rome}
+\subsubsection{Greece}
+\subsubsection{Rome}
+\subsection{The Middle Ages}
+\end{verbatim}
+
+This produces the following output: 
+\section{History of Western Civilization}
+\subsection{Ancient Greece and Rome}
+\subsubsection{Greece}
+\subsubsection{Rome}
+\subsection{The Middle Ages}
+
+You'll notice that each (sub)section is numbered automatically. If you don't want \LaTeX~to number your sections for you, simply include an asterisk before the curly brackets when you write the command. Thus the following code:
+\begin{verbatim}
+\section*{History of Western Civilization}
+\subsection*{Ancient Greece and Rome}
+\subsubsection*{Greece}
+\subsubsection*{Rome}
+\subsection*{The Middle Ages}
+\end{verbatim}
+gives us the following result: 
+\section*{History of Western Civilization}
+\subsection*{Ancient Greece and Rome}
+\subsubsection*{Greece}
+\subsubsection*{Rome}
+\subsection*{The Middle Ages}
+
+\section*{Why We Use \LaTeX}
+Ok, so all of this is great and everything, but why are we wasting our time with this program when Microsoft Word is so much easier to use? One of the main reasons is because of \LaTeX's ability to easily include mathematical symbols and the ability to easily organize lines of code. Let's start with the first: 
+For those of you using a GUI, you'll notice a tab near the top of your window called ``Math''. If you click that, you can see that there are numerous mathematical symbols just waiting to be included. If you want to include something like the summation notation for a homework problem (or, later, a mathematical proof as part of a formal theory), you can do so with ease. For those of you without a GUI, generating such symbols is still pretty easy, and in fact much faster once you learn all the code. For example, to write the summation notation, we simply write \begin{verbatim} \sum \end{verbatim} which gives us the following, well-known mathematical symbol: $\sum$.
+
+Say we also want to include some other information about the summation notation, such as what all should be added up then we can write \begin{verbatim} \sum^{70}_{i = 1} \end{verbatim}
+to get $\sum^{70}_{i = 1}$. Unfortunately, if you look at the pdf, we can see that this summation notation symbol did not come out very clean: the 70 should appear \textit{over} the summation notation and the $i = 1$ should appear \textit{under} it, but instead they're off to the side. Sometimes the math created by \LaTeX~ needs to be cleaned up; to do that, you use the command \begin{verbatim} \displaystyle \end{verbatim} So for example, to make our summation notation look nice, we would have: \begin{verbatim} \displaystyle\sum^{70}_{i = 1} \end{verbatim} This gives us a much better looking summation notation: $\displaystyle\sum^{70}_{i = 1}$. 
+
+HINT: if you ever don't know what code to use to make a specific mathematical symbol, there's a website that can help you find it: \url{http://detexify.kirelabs.org/classify.html}. Go to this site and simply draw a rough depiction of the symbol you want the code for, and the website will give you a list of symbols (and their code) that look like the symbol you drew. If you know the name, use the cheat-sheet or google.
+
+\LaTeX~also has a nice feature as far as organizing your mathematical proofs. There are several ways this can be done, but the one I use the most often is the align command, which is part of the amsmath package (remember: if you want to use a command that's part of a package, you must remember to call the package at the beginning of your document in the preamble. Otherwise \LaTeX~won't understand when you try to get it to use the align command). Let's say you were asked to solve the following equation: $3x + 12 - 4x + 73 - 50 + 9x = 75$ and you were asked to show your work. Then you would probably have something like the following lines: \\
+3x + 12 - 4x + 73 - 50 + 9x = 75\\
+3x - 4x + 9x = 75 - 12 - 73 + 50\\
+9x - x = 2 - 12 + 50\\
+8x = 40\\
+x = 5\\
+That looks horrible; we could clean it up a little by centering it, but even then it would still be a little confusing:
+\begin{center}
+3x + 12 - 4x + 73 - 50 + 9x = 75\\
+3x - 4x + 9x = 75 - 12 - 73 + 50\\
+9x - x = 2 - 12 + 50\\
+8x = 40\\
+x = 5\\
+\end{center} 
+With the align command, we can clean this up so it looks nicer and it's easier to follow the work. To use the align command, you simply write the following code: 
+\begin{verbatim}
+\begin{align}
+3x + 12 - 4x + 73 - 50 + 9x &= 75\\
+3x - 4x + 9x &= 75 - 12 - 73 + 50\\
+9x - x &= 2 - 12 + 50\\
+8x &= 40\\
+x &= 5\\
+\end{align}
+\end{verbatim}
+Thus, using the align command with our previous equations, we have: 
+\begin{align}
+3x + 12 - 4x + 73 - 50 + 9x &= 75\\
+3x - 4x + 9x &= 75 - 12 - 73 + 50\\
+9x - x &= 2 - 12 + 50\\
+8x &= 40\\
+x &= 5
+\end{align}
+Which of course looks much nicer. You'll notice that in the code above, there is an ampersand symbol (\&) next to each of the equal signs. When using the align environment, you include an ampersand sign to tell \LaTeX~how you want the equations aligned. In this case, I wanted the equations lined up so that the equal signs (=) would all be directly above each other, so it would be easy to tell what numbers/factors were on which side of the equation. You can include more than one ampersand sign per line in an align environment, and \LaTeX~will try to line them all up; however usually when I try to do this I run into some trouble. Feel free to experiment with it and see if you can get it to work if you like; but I usually just stick with one ampersand per line. 
+
+You'll also notice that each of the lines is automatically numbered by the align environment. This can be very handy, since it allows you to refer to specific lines later in your document. However, if you don't want the lines to be numbered for whatever reason, then simply include an asterisk (*) after the word align in the align environment. For example: \begin{verbatim}
+\begin{align*}
+3x + 12 - 4x + 73 - 50 + 9x &= 75\\
+3x - 4x + 9x &= 75 - 12 - 73 + 50\\
+9x - x &= 2 - 12 + 50\\
+8x &= 40\\
+x &= 5
+\end{align*} \end{verbatim}  gives the following, number-less output: 
+\begin{align*}
+3x + 12 - 4x + 73 - 50 + 9x &= 75\\
+3x - 4x + 9x &= 75 - 12 - 73 + 50\\
+9x - x &= 2 - 12 + 50\\
+8x &= 40\\
+x &= 5
+\end{align*}
+
+\section{Including Matrices, Tables, and Graphs}
+To include a matrix, use the following code:
+\begin{verbatim}
+\begin{matrix}
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{matrix}
+\end{verbatim}
+This will produce:\\
+$\begin{matrix}
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{matrix}$\\
+You'll notice every element in the matrix is separated by an ampersand (\&). Also whenever you want to end a line, simply put in two backslashes, and \LaTeX~will know to start a new row. 
+
+Most matrices you create will need to be surrounded either by parentheses, brackets, or bars; adding these symbols to your matrix is actually very easy. Simply change your code to:
+
+\begin{verbatim}
+\begin{pmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{pmatrix}
+\end{verbatim}
+
+\begin{verbatim}
+\begin{bmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{bmatrix}
+\end{verbatim}
+
+\begin{verbatim}
+\begin{vmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{vmatrix}
+\end{verbatim}
+
+\begin{verbatim}
+\begin{Vmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{Vmatrix}
+\end{verbatim}
+
+This gives us: \\
+\begin{center}
+$\begin{pmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{pmatrix} \begin{bmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{bmatrix} \begin{vmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{vmatrix} \begin{Vmatrix}
+\centering
+1 & 2 & 3\\
+4 & 5 & 6\\
+7 & 8 & 9
+\end{Vmatrix}$
+\end{center}
+
+Making tables is also very easy. Here's an example of the code and it's output (Note: this code was produced using the xtable function in R; see the bottom of my R guide for more info, or look up the xtable function yourself via google; stargazer is even better once you start running models). 
+\begin{verbatim}
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrr}
+  \hline
+ & Age & Height\_in\_Feet & Years of School \\ 
+  \hline
+Bobby & 1.00 & 4.00 & 7.00 \\ 
+  Dani & 2.00 & 5.00 & 8.00 \\ 
+  Linda & 3.00 & 6.00 & 9.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+\end{verbatim}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrr}
+  \hline
+ & Age & Height\_in\_Feet & Years of School \\ 
+  \hline
+Bobby & 1.00 & 4.00 & 7.00 \\ 
+  Dani & 2.00 & 5.00 & 8.00 \\ 
+  Linda & 3.00 & 6.00 & 9.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+In the above example you begin by creating a table environment, which is everything between the lines \begin{verbatim}\begin{table}[ht] and \end{table} \end{verbatim}
+Then you can center the table using the centering command (which must come after the begin table command). The next line, begin tabular, you'll notice has 4 r's in curly brackets after it. This tells \LaTeX~how many columns you want (4 in this example, because there are 4 r's) and how you want each column aligned. The r stands for right aligned; you could also type l if you wanted the information in the column left aligned, or c if you want it centered. The stuff in the middle works very similarly to a matrix, where each element in the table is separated by an ampersand and each line is ended by a pair of backslashes.
+You'll also notice the hline command. This command will add a horizontal line wherever you put it, which can be great for separating parts of a table that you want to emphasize (such as the first row that contains the column names, or a last row if that contained total values or something like that). If you want to add vertical lines to a table (for example, to mark the left and right edges of the table or to separate each column clearly from the other), then you simply add the | symbol in the begin tabular line, along with all the r's. The code below demonstrates this:
+\begin{verbatim}
+\begin{table}[ht]
+\centering
+\begin{tabular}{|rrrr|} %notice here, I added two | symbols around the r's
+  \hline
+ & Age & Height\_in\_Feet & Years of School \\ 
+  \hline
+Bobby & 1.00 & 4.00 & 7.00 \\ 
+  Dani & 2.00 & 5.00 & 8.00 \\ 
+  Linda & 3.00 & 6.00 & 9.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+\end{verbatim}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|rrrr|} %notice here, I added two | symbols around the r's
+  \hline
+ & Age & Height\_in\_Feet & Years of School \\ 
+  \hline
+Bobby & 1.00 & 4.00 & 7.00 \\ 
+  Dani & 2.00 & 5.00 & 8.00 \\ 
+  Linda & 3.00 & 6.00 & 9.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Finally, you'll notice in the begin table line, we have brackets at the end with the letters ht in them. The letters you place in these brackets tell \LaTeX~where you want it to place the table. The letter t stands for top, h stands for here, b stands for bottom. I think there are other letters you can do as well; I don't know them all but feel free to google them I have a feeling c will put it in the center of the page. (Speaking from experience, these placement letters can be tricky to work with; I've often tried getting \LaTeX~to put tables/figures where I want it to, and it often fights me on it.)
+
+Finally...including graphs and images. One way to do this is with a Knitr document in R Studio (see the Knitr Basics guide if you want to know the basics of including documents using Knitr). However there are ways to bring graphs you created using R into \LaTeX~without Knitr. Here's an example: 
+
+\begin{verbatim}
+\begin{figure}
+	\includegraphics[scale = .4]{NAME_OF_FILE.pdf}
+	\end{figure }
+\end{verbatim} 
+
+So here you begin by telling R you want it to include a specific pdf file, and you tell it how big you want to scale the pdf file. Obviously for this to work, you will need to have the graph(s) you produced in R saved as pdf's somewhere on your harddrive.  
+ 
+\section{Math Mode}
+Last main thing to note:  when you're writing something, especially if it's a mathematical symbol or mathematically-related, you will need to put it in math mode. For example, to make fractions in \LaTeX, you use the command: \begin{verbatim} \frac{numerator goes here}{denominator goes here} \end{verbatim} If this isn't in math mode, then your computer either won't produce the pdf when you try to compile it, or else it will look funny in the final pdf form. To put something in math mode, simply put dollar signs around it. Some environments, like the align environment, will automatically put whatever is in them in math mode, so you don't need to include dollar signs in these cases. While in math mode, if you want to include text, simply use the command \texttt{\text{}}.
+
+\section{Miscellaneous Reference}
+\flushleft
+\url{https://tobi.oetiker.ch/lshort/lshort.pdf}
+
+This is a good source for an introduction to \LaTeX, including some stuff I haven't included here. 
+
+\url{http://detexify.kirelabs.org/classify.html}
+
+The site I mentioned earlier; if you want to know the code to create a certain symbol in \LaTeX, simply draw the symbol here and the site will help you find the code you are looking for. 
+
+\url{programming-motherfucker.com}
+
+\url{codeacademy.com}
+
+These two sites are good for any programming reference.
+
+
+\section{One Last Word}
+Just to be clear how packages work: if you want to use the align command, you must have the amsmath package loaded. You'll have to load this every time you make a new .tex file, if you want to use the align command or any other command from the amsmath package in that particular .tex file. Often I just make a list of the main packages I use in every file and put them in my header/preamble every time I start a new .tex file; that way I won't forget to include them, and then wonder why my code isn't working later on. Like the packages in R, there are many, many packages in \LaTeX~that can do all kinds of things; feel free to google stuff and see what works for you.
+
+\end{document}

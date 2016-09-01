@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[top=1in, bottom=1in, right=1in, left=1in]{geometry}
+
+
+\begin{document}
+
+
+Knitr documents are basically a handy way of combining your LaTeX code with your R code. You'll notice, if you look at the .Rnw file for this guide, that the beginning is very similar to a basic LaTeX template: you have your document class line, followed by the rest of your header/preamble including all the packages you want to use. Then comes the begin document command, and at the very bottom the end document commands. So for the most part, the bulk of a Knitr file will often look identical to a LaTeX file. Go to Tools/Global Options/Sweave/Weave Rnw files using... and select knitr.
+\newline
+\indent The main difference is being able to include your R code. Whenever you want to include your R code, you have to place it inside something called a ``chunk''. To begin a chunk, you put two less than symbols, followed by two greater than symbols, and then an equal sign on their own line. To end a chunk, you simply place the at symbol (@) on it's own line. Therefore the first line of your chunk would look like this: $<<>>=$ and the last line of your chunk would look like this: @
+\newline
+Including your R code along with the rest of your .tex file can be very useful. For example, let's say we had a vector in R, called X.Zero, which was ten elements long, and we wanted to show what the elements in that vector in our LaTeX file. Now we could write out, in LaTeX, what each of the elements are; however an easier way to do this is to simply create a chunk, and in that chunk ask R to return the value of our X.Zero vector to us. So in the chunk we'd have the following lines of code:
+<<>>=
+X.Zero <- 1:10
+X.Zero
+@
+The first line of code simply defines X.Zero as a vector of 10 numbers, from 1 to 10. The second line, if normally put into R on its own, shows you this vector in your console window. But now, since it's part of the Knitr document, it will do the same thing to your pdf file (which, if you're looking at the pdf right now, you should see above...the numbers 1 through 10 in a line directly above this paragraph, right after the code from the chunk)
+\newline
+You can do the same thing with something like a matrix. Say you don't want to write a matrix out in LaTeX (which you probably should do, since it looks nicer, especially if you're doing a paper or article...what I'm showing is mostly for demonstration purposes). Then you have the following code...
+<<>>=
+Matrix.One <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow=3, ncol=3)
+Matrix.One
+@
+Again, the first line of code above simply defines the matrix, while the second row asks R to show us the Matrix. Since we included this in our Knitr document, the matrix is included in the pdf.
+\newline
+\indent Here's another example of how including your R code into the LaTeX file might help: Let's say you wanted to create a variable, which we'll call X.One, which is just a single, random number taken from a normal probability distribution. From our R guide, we know the R code to do this: simply use the rnorm() function and set n equal to 1 (and set the mean and standard deviation too, of course, depending on what you want those to be). However every time we run the rnorm function, that vector will get a new randomly drawn number. This can be a problem: say for example we wanted to refer to this number in our LaTeX file. When \textit{we} run the R code, the number it gives us is, say, 3.415; but when \textit{somebody else} runs the R code, maybe it gives him/her 2.561. Then in our LaTeX document, if we refer to 3.415, this other person won't have any idea what we're talking about because they had a different randomly drawn number. However we can't refer to the number 2.561, because we don't know what number will be randomly drawn when this other person executes the R code. 
+\newline
+\indent To get around this problem, we can use a handy little command called \begin{verbatim}\Sexpr{} \end{verbatim}. Inside the curly brackets, we would place the name of the object that we want to see (in this example, X.One). Then Knitr will automatically look up the value of that object and include it right in the middle of the LaTeX file. Here's an example:
+<<>>=
+X.One <- rnorm(n=1, mean=0, sd=5)
+X.One
+@
+Now we simply write use the Sexpr command and write ``X.One'' inside the curly brackets. Include this anywhere in our LaTeX code (NOT the R chunk), and it will tell us what number X.One is. Thus we know that this time, X.One was randomly drawn to be $\Sexpr{X.One}$. You'll notice that if you compile this Knitr document multiple times, then the value we get for X.One will change each time; but each time the Sexpr command will still give us the value of X.One that was randomly selected that time. 
+\newline
+\indent Finally, and perhaps most importantly: Knitr is great for including graphics (e.g. plots) in our LaTeX file easily and clearly. Below I include the code to make a simple graph in R. You'll notice, after the code, the graph is automatically included (see the next page). 
+<<>>=
+x <- seq(-10, 10, by=0.01)
+y <- x^3
+plot(x, y, type="l")
+@
+Now, let's say we wanted to include a graph, but we didn't want to include the R code we used to make the graph (because let's face it, readers don't really care about what code was used to generate the graph; they just care about the graph itself). If you don't want your R code from a specific chunk to appear in your pdf file, then all you have to do is, in the middle of the first line of your chunk (e.g. $<<>>=$), you write $echo = FALSE$. In other words, you would have: $<<echo=FALSE>>=$. I do that with the next chunk...you'll notice it's exactly the same as the last graph, but now the R code that was used to make it disappears from the pdf.  
+<<echo=FALSE>>=
+##setting echo=FALSE above makes it so the output only produces the plot, and doesn't show the code used to make the plot
+plot(x, y, type="l")
+@
+
+We may also want to make our graphs smaller, so that they don't take up an entire page. The easiest way to do that is, like the $echo=FALSE$ command above, include the following commands in the first line of your chunk: out.height=``3 in'', out.width=``3in''. This will rescale your graph so that it's dimensions are now 3 inches by 3 inches in the final pdf.  
+<<echo=FALSE, out.height="3 in", out.width="3 in">>=
+plot(x, y, type="l")
+@
+
+To center your figure in the middle of the page, begin by creating a figure environmentin in LaTeX. Then, after the begin figure line, add the centering command to center your figure. Thus, you should have some code like this: \begin{verbatim} \begin{figure}[H] 
+\centering
+R CHUNK GOES HERE
+\end{figure} \end{verbatim}  
+\begin{figure}[H]
+\centering
+<<echo=FALSE, out.height="3 in", out.width="3 in">>=
+##in this example, since we used the \begin{figure} \end{figure} environment, we had to include the command fig=TRUE in the line above
+plot(x, y, type="l")
+@
+\end{figure}
+
+You can also simply put a begin center before the chunk and end it after the chunk. This doesn't always produce what you want, though.
+
+Finally, if you want to put two plots side-by-side, you use the minipage environment. The code looks something like this:
+\begin{verbatim}
+\begin{figure}[H]
+\begin{minipage}{0.5\linewidth}
+R CHUNK FOR YOUR FIRST PLOT GOES HERE
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+R CHUNK FOR YOUR SECOND PLOT GOES HERE
+\end{minipage}
+\end{figure}
+\end{verbatim}
+
+%%To make two figures side by side...
+\begin{figure}[t]
+\begin{minipage}{0.5\linewidth}
+<<echo=FALSE, out.height="3 in", out.width="3 in">>=
+plot(x, y, type="l")
+@
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+<<echo=FALSE, out.height="3 in", out.width="3 in">>=
+plot(x, y, type="l")
+@
+\end{minipage}
+\end{figure}
+
+\end{document}
